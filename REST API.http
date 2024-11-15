@@ -1,4 +1,4 @@
-GET http://localhost:81/java
+GET http://localhost:8082/demo/all
 
 ###
 
