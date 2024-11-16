@@ -29,7 +29,7 @@ pipeline {
                     
                     // Lấy token từ API của SonarQube
                     def tokenResponse = sh(script: '''
-                        curl -u admin:admin_password -X POST "http://localhost:9000/api/user_tokens/generate?name=my_token"
+                        curl -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=my_token"
                     ''', returnStdout: true).trim()
 
                     // Parse response để lấy token
