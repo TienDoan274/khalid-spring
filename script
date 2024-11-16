@@ -2,11 +2,11 @@ CREATE USER 'khalid'@'%' IDENTIFIED BY 'password123_DONG';
 GRANT ALL PRIVILEGES ON db_example.* TO 'khalid'@'%';
 FLUSH PRIVILEGES;
 
--- USE db_example;
+USE db_example;
 
--- CREATE TABLE User (
---     id INT AUTO_INCREMENT PRIMARY KEY,
---     name VARCHAR(255) NOT NULL,
---     email VARCHAR(255) NOT NULL,
---     age INT
--- );
+CREATE TABLE User (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    age INT
+);

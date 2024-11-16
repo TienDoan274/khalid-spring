@@ -1,8 +1,9 @@
-GET http://localhost:8082/demo/all
+
+GET http://localhost:8081/demo/all
 
 ###
 
-POST http://localhost:8082/demo/add?name=khalid_dinh&email=beensand97@gmail.com&age=21
+POST http://localhost:8081/demo/add?name=tiendoan&email=doannhattien4@gmail.com&age=21
 ###
 
-POST http://localhost:8082/demo/add?name=dinhlehoang&email=beensand97@gmail.com&age=23
+POST http://localhost:8081/demo/add?name=dinhlehoang&email=beensand97@gmail.com&age=23
