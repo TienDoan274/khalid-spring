@@ -19,31 +19,31 @@ pipeline {
                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
-        // stage('SonarQube Analysis') {
-        //     steps {
-        //         withSonarQubeEnv('sonarqube scanner') { 
-        //             sh '''
-        //                 mvn sonar:sonar \
-        //                 -Dsonar.projectKey=my-springboot-app \
-        //                 -Dsonar.host.url=http://localhost:9000 \
-        //                 -Dsonar.login=${SONARQUBE_ENV} \
-        //                 -Dsonar.java.binaries=target/classes
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube scanner') { 
+                    sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=my-springboot-app \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=${SONARQUBE_ENV} \
+                        -Dsonar.java.binaries=target/classes
+                    '''
+                }
+            }
+        }
 
-        // stage('Quality Gate') {
-        //     steps {
-        //         // Đợi và kiểm tra kết quả Quality Gate từ SonarQube
-        //         script {
-        //             def qg = waitForQualityGate()
-        //             if (qg.status != 'OK') {
-        //                 error "Pipeline failed due to quality gate failure: ${qg.status}"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Quality Gate') {
+            steps {
+                // Đợi và kiểm tra kết quả Quality Gate từ SonarQube
+                script {
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                        error "Pipeline failed due to quality gate failure: ${qg.status}"
+                    }
+                }
+            }
+        }
 
         stage('Packaging/Pushing imaga') {
 
