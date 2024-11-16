@@ -5,5 +5,3 @@ GET http://localhost:8081/demo/all
 
 POST http://localhost:8081/demo/add?name=tiendoan&email=doannhattien4@gmail.com&age=21
 ###
-
-POST http://localhost:8081/demo/add?name=dinhlehoang&email=beensand97@gmail.com&age=23
