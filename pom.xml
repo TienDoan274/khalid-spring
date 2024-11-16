@@ -14,8 +14,8 @@
 	<name>tiendoan-spring</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-	    <!-- <sonar.login>squ_fb3041f103fc7c5976950fea88fd1d75adca7ce7</sonar.login>
-    	<sonar.host.url>http://sonarqube:9000</sonar.host.url> -->
+	    <sonar.token>squ_fb3041f103fc7c5976950fea88fd1d75adca7ce7</sonar.token>
+    	<sonar.host.url>http://sonarqube:9000</sonar.host.url>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
@@ -46,11 +46,11 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- <plugin>
+			<plugin>
             <groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.9.1.2184</version>
-        	</plugin> -->
+        	</plugin>
 		</plugins>
 	</build>
 
