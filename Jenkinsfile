@@ -20,7 +20,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') { // Tên SonarQube Server cấu hình trong Jenkins
+                withSonarQubeEnv('sonarqube scanner') { // Tên SonarQube Server cấu hình trong Jenkins
                     sh '''
                         mvn sonar:sonar \
                         -Dsonar.projectKey=my-springboot-app \
