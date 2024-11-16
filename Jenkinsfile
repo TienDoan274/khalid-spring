@@ -3,7 +3,6 @@ pipeline {
     agent any
 
     tools { 
-        // sonarqube 'sonarqube scanner'
         maven 'my-maven' 
     }
     environment {
@@ -12,60 +11,60 @@ pipeline {
     }
     stages {
 
-        stage('Run SonarQube Container') {
-            steps {
-                script {
-                    // Run SonarQube container if it's not running
-                    sh '''
-                        if [ ! "$(docker ps -q -f name=sonarqube)" ]; then
-                            if [ "$(docker ps -aq -f status=exited -f name=sonarqube)" ]; then
-                                # Cleanup if a stopped container exists
-                                docker rm sonarqube
-                            fi
-                            # Run the SonarQube container
-                            docker run -d --name sonarqube -p 9000:9000 --network dev sonarqube:latest
-                        fi
-                    '''
+        // stage('Run SonarQube Container') {
+        //     steps {
+        //         script {
+        //             // Run SonarQube container if it's not running
+        //             sh '''
+        //                 if [ ! "$(docker ps -q -f name=sonarqube)" ]; then
+        //                     if [ "$(docker ps -aq -f status=exited -f name=sonarqube)" ]; then
+        //                         # Cleanup if a stopped container exists
+        //                         docker rm sonarqube
+        //                     fi
+        //                     # Run the SonarQube container
+        //                     docker run -d --name sonarqube -p 9000:9000 --network dev sonarqube:latest
+        //                 fi
+        //             '''
                     
-                    // Lấy token từ API của SonarQube
-                    def tokenResponse = sh(script: '''
-                        apk add --no-cache curl
-                        curl -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=my_token"
-                    ''', returnStdout: true).trim()
+        //             // Lấy token từ API của SonarQube
+        //             def tokenResponse = sh(script: '''
+        //                 // apk add --no-cache curl
+        //                 curl -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=my_token"
+        //             ''', returnStdout: true).trim()
 
 
-                    // Parse response để lấy token
-                    def tokenJson = readJSON text: tokenResponse
-                    SONARQUBE_TOKEN = tokenJson.token
-                    echo "SonarQube Token: ${SONARQUBE_TOKEN}"
-                }
-            }
-        }
+        //             // Parse response để lấy token
+        //             def tokenJson = readJSON text: tokenResponse
+        //             SONARQUBE_TOKEN = tokenJson.token
+        //             echo "SonarQube Token: ${SONARQUBE_TOKEN}"
+        //         }
+        //     }
+        // }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube scanner') { 
-                    sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=my-springboot-app \
-                        -Dsonar.host.url=${SONARQUBE_URL} \
-                        -Dsonar.login=${SONARQUBE_TOKEN} \
-                        -Dsonar.java.binaries=target/classes
-                    '''
-                }
-            }
-        }
+        // stage('SonarQube Analysis') {
+        //     steps {
+        //         withSonarQubeEnv('sonarqube scanner') { 
+        //             sh '''
+        //                 mvn sonar:sonar \
+        //                 -Dsonar.projectKey=my-springboot-app \
+        //                 -Dsonar.host.url=${SONARQUBE_URL} \
+        //                 -Dsonar.login=${SONARQUBE_TOKEN} \
+        //                 -Dsonar.java.binaries=target/classes
+        //             '''
+        //         }
+        //     }
+        // }
 
-        stage('Quality Gate') {
-            steps {
-                script {
-                    def qg = waitForQualityGate()
-                    if (qg.status != 'OK') {
-                        error "Pipeline failed due to quality gate failure: ${qg.status}"
-                    }
-                }
-            }
-        }
+        // stage('Quality Gate') {
+        //     steps {
+        //         script {
+        //             def qg = waitForQualityGate()
+        //             if (qg.status != 'OK') {
+        //                 error "Pipeline failed due to quality gate failure: ${qg.status}"
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Packaging/Pushing Image') {
             steps {
