@@ -17,7 +17,7 @@ pipeline {
             steps {
                 powershell 'mvn --version'
                 powershell 'java -version'
-                powershell 'mvn clean package -Dmaven.test.failure.ignore=true'
+                powershell 'mvn clean package -D maven.test.failure.ignore=true'
             }
         }
 
