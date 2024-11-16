@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     tools { 
-        sonarqube 'sonarqube scanner'
+        // sonarqube 'sonarqube scanner'
         maven 'my-maven' 
     }
     environment {
