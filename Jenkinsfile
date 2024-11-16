@@ -12,6 +12,24 @@ pipeline {
     }
     stages {
 
+        stage('Run SonarQube Container') {
+            steps {
+                script {
+                    // Run SonarQube container if it's not running
+                    sh '''
+                        if [ ! "$(docker ps -q -f name=sonarqube)" ]; then
+                            if [ "$(docker ps -aq -f status=exited -f name=sonarqube)" ]; then
+                                # Cleanup if a stopped container exists
+                                docker rm sonarqube
+                            fi
+                            # Run the SonarQube container
+                            docker run -d --name sonarqube -p 9000:9000 --network dev sonarqube:latest
+                        fi
+                    '''
+                }
+            }
+        }
+
         stage('Build with Maven') {
             steps {
                 sh 'mvn --version'
@@ -45,8 +63,7 @@ pipeline {
             }
         }
 
-        stage('Packaging/Pushing imaga') {
-
+        stage('Packaging/Pushing Image') {
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
                     sh 'docker build -t tiendn274/springboot .'
@@ -77,12 +94,10 @@ pipeline {
                 sh 'docker container stop tiendoan-springboot || echo "this container does not exist" '
                 sh 'docker network create dev || echo "this network exists"'
                 sh 'echo y | docker container prune '
-
                 sh 'docker container run -d --name tiendoan-springboot -p 8081:8080 --network dev tiendn274/springboot'
-
             }
         }
- 
+
     }
     post {
         // Clean after build
