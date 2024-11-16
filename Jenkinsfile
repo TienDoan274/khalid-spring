@@ -18,8 +18,9 @@ pipeline {
                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
-        stage 'Code Quality'
+        stage ('Code Quality'){
             sh "mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000"
+        }
         // stage('SonarQube Analysis') {
         //     steps {
         //         withSonarQubeEnv('sonarqube scanner') { // Tên SonarQube Server cấu hình trong Jenkins
