@@ -24,7 +24,7 @@ pipeline {
                     sh '''
                         mvn sonar:sonar \
                         -Dsonar.projectKey=my-springboot-app \
-                        -Dsonar.host.url=http://0.0.0.0:9000 \
+                        -Dsonar.host.url=http://localhost:9000 \
                         -Dsonar.login=${SONARQUBE_ENV} \
                         -Dsonar.java.binaries=target/classes
                     '''
