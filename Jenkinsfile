@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
         MYSQL_ROOT_LOGIN = credentials('mysql')
-        SONARQUBE_ENV = credentials('sonarqube_token') 
+        SONARQUBE_ENV = credentials('sonarqube-token') 
     }
     stages {
 
