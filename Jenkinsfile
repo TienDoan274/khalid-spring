@@ -3,6 +3,7 @@ pipeline {
     agent any
 
     tools { 
+        sonarqube 'sonarqube scanner'
         maven 'my-maven' 
     }
     environment {
@@ -20,7 +21,7 @@ pipeline {
         }
         // stage('SonarQube Analysis') {
         //     steps {
-        //         withSonarQubeEnv('SonarQube') { // Tên SonarQube Server cấu hình trong Jenkins
+        //         withSonarQubeEnv('sonarqube scanner') { 
         //             sh '''
         //                 mvn sonar:sonar \
         //                 -Dsonar.projectKey=my-springboot-app \
