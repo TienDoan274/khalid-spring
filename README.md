@@ -72,4 +72,10 @@ Paste this password into the Administrator password field.
 
 After that, choose install suggested plugins
 
+Install a few more necessary plugins for this project: Dashboard->Manage Jenkins->Plugins->Available plugins: SonarQube Scanner, Docker, Maven Intergration.
+
+Set up credentials at: Dashboard->Manage Jenkins->Credentials
+- Docker hub account (id:dockerhub)
+- Mysql account (id:mysql)
+- SonarQube token (The token that we have made before,id:sonarqube-token)
 

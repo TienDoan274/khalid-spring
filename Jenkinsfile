@@ -20,17 +20,20 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube scanner') { // Tên SonarQube Server cấu hình trong Jenkins
-                    sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=my-springboot-app \
-                        -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=${SONARQUBE_ENV} \
-                        -Dsonar.java.binaries=target/classes
-                    '''
+                withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+                    withSonarQubeEnv('sonarqube scanner') {
+                        sh '''
+                            mvn sonar:sonar \
+                            -Dsonar.projectKey=my-springboot-app \
+                            -Dsonar.host.url=http://sonarqube:9000 \
+                            -Dsonar.login=${SONAR_TOKEN} \
+                            -Dsonar.java.binaries=target/classes
+                        '''
+                    }
                 }
             }
         }
+
 
         stage('Quality Gate') {
             steps {
