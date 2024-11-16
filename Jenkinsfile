@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
         MYSQL_ROOT_LOGIN = credentials('mysql')
-        SONARQUBE_ENV = credentials('sonarqube-token') 
+        SONAR_TOKEN = credentials('sonarqube-token') 
     }
     stages {
 
@@ -15,6 +15,7 @@ pipeline {
             steps {
                 sh 'mvn --version'
                 sh 'java -version'
+                sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN'
                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
