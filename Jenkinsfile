@@ -19,39 +19,39 @@ pipeline {
             }
         }
         
-        // stage('SonarQube Analysis') {
-        //     steps {
-        //         withSonarQubeEnv('sonarqube scanner') { // Tên SonarQube Server cấu hình trong Jenkins
-        //             sh '''
-        //                 mvn sonar:sonar \
-        //                 -Dsonar.projectKey=my-springboot-app \
-        //                 -Dsonar.host.url=http://sonarqube:9000 \
-        //                 -Dsonar.login=${SONAR_TOKEN} \
-        //                 -Dsonar.java.binaries=target/classes
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube scanner') { // Tên SonarQube Server cấu hình trong Jenkins
+                    sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=my-springboot-app \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.login=${SONAR_TOKEN} \
+                        -Dsonar.java.binaries=target/classes
+                    '''
+                }
+            }
+        }
 
 
-        // stage('Quality Gate') {
-        //     steps {
-        //         // Đợi và kiểm tra kết quả Quality Gate từ SonarQube
-        //         script {
-        //             def qg = waitForQualityGate()
-        //             if (qg.status != 'OK') {
-        //                 error "Pipeline failed due to quality gate failure: ${qg.status}"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Quality Gate') {
+            steps {
+                // Đợi và kiểm tra kết quả Quality Gate từ SonarQube
+                script {
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                        error "Pipeline failed due to quality gate failure: ${qg.status}"
+                    }
+                }
+            }
+        }
 
         stage('Packaging/Pushing image') {
 
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker build -t tiendn274/springboot .'
-                    sh 'docker push tiendn274/springboot'
+                    sh 'docker build -t tiendn274/springboot .' // Replace with your dockerhub username
+                    sh 'docker push tiendn274/springboot' 
                 }
             }
         }
