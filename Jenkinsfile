@@ -36,7 +36,6 @@ pipeline {
 
         stage('Quality Gate') {
             steps {
-                // Đợi và kiểm tra kết quả Quality Gate từ SonarQube
                 script {
                     def qg = waitForQualityGate()
                     if (qg.status != 'OK') {
@@ -66,8 +65,12 @@ pipeline {
                 sh 'docker volume rm tiendoan-mysql-data || echo "no volume"'
 
                 sh "docker run --name tiendoan-mysql --rm --network dev -v tiendoan-mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=db_example  -d mysql:8.0 "
-                sh 'sleep 20'
-                sh "docker exec -i tiendoan-mysql mysql --user=root --password=${MYSQL_ROOT_LOGIN_PSW} < script"
+                sh """
+                    until docker exec tiendoan-mysql mysql --user=root --password=${MYSQL_ROOT_LOGIN_PSW} -e "SELECT 1"; do
+                        echo "Waiting for MySQL to start..."
+                        sleep 5
+                    done
+                """
             }
         }
 
