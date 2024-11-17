@@ -14,8 +14,8 @@
 	<name>tiendoan-spring</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-	    <sonar.login>squ_fb3041f103fc7c5976950fea88fd1d75adca7ce7</sonar.login>
-		<sonar.host.url>http://sonarqube:9000</sonar.host.url>
+	    <sonar.host.url>http://sonarqube:9000</sonar.host.url>
+    	<sonar.login>squ_b95b8037d2ba7a69e7d44a079199b2543659ddb0</sonar.login>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
@@ -38,6 +38,11 @@
 				<artifactId>mysql-connector-java</artifactId>
 				<version>8.0.33</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>8.0.33</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -46,11 +51,11 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- <plugin>
+			<plugin>
             <groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.9.1.2184</version>
-        	</plugin> -->
+        	</plugin>
 		</plugins>
 	</build>
 

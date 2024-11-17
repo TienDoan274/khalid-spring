@@ -52,6 +52,10 @@ docker run --name jenkins-blueocean --restart=on-failure --detach ^
 
 `docker exec -it jenkins-docker sh`
 
+Create new network
+
+`docker network create dev`
+
 Run sonarqube docker container
 
  `docker run -d --name sonarqube -p 9000:9000 --network dev sonarqube:latest`
