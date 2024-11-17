@@ -15,7 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 	    <sonar.host.url>http://sonarqube:9000</sonar.host.url>
-    	<sonar.login>sqa_ab3817351049228a09258589e44555618810d992</sonar.login>
+    	<sonar.login>${env.SONAR_TOKEN}</sonar.login>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
