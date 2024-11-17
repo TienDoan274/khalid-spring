@@ -61,7 +61,7 @@ Run sonarqube docker container
  `docker run -d --name sonarqube -p 9000:9000 --network dev sonarqube:latest`
  
 Get Sonarqube token
-
+`apk add curl`
 `curl -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=my_token"`
 
 Save this token to config in Jenkins later !
